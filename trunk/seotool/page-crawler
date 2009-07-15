@@ -8,7 +8,7 @@
 #set -x
 
 GADIR=$1
-BASE_DIR=./seotool
+BASE_DIR=./
 CONF=$BASE_DIR/conf/`echo $GADIR|tr A-Z a-z`.conf
 REPORT_DIR=$BASE_DIR/REPORTS/$GADIR
 
