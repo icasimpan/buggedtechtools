@@ -4,7 +4,7 @@
 #set -x
 #set -v
 
-BASEDIR=/Users/icasimpan/Desktop/www2-metatags-checker/REPORTS
+BASEDIR=./seotool/REPORTS
 PAGE_PATH=$BASEDIR/$1
 SUMMARY_FILE=$BASEDIR/SUMMARY/${1}_4review
 
