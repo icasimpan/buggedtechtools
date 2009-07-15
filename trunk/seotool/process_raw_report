@@ -1,0 +1,21 @@
+#!/bin/bash
+
+### enable set lines below for debugging...
+#set -x
+#set -v
+
+BASEDIR=/Users/icasimpan/Desktop/www2-metatags-checker/REPORTS
+PAGE_PATH=$BASEDIR/$1
+SUMMARY_FILE=$BASEDIR/SUMMARY/${1}_4review
+
+## Make sure the $SUMMARY_FILE is blank
+echo "" > $SUMMARY_FILE
+
+## Do the actual summarization, getting the important headers...
+for n in $(ls $PAGE_PATH); do
+    echo "checking on $PAGE_PATH/$n..."                             >> $SUMMARY_FILE
+    grep -i \<TITLE                    $PAGE_PATH/$n                >> $SUMMARY_FILE
+    grep -i \<META\ NAME=\"DESCRIPTION $PAGE_PATH/$n                >> $SUMMARY_FILE
+    grep -i \<META\ NAME=\"KEYWORDS    $PAGE_PATH/$n                >> $SUMMARY_FILE
+    echo '--------------------------------------------------------' >> $SUMMARY_FILE
+done

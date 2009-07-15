@@ -1,0 +1,6 @@
+#!/bin/bash
+
+for n in $(cat conf/page-crawler.conf); do
+    echo "Crawling the pages of $n"
+    ./page-crawler $n
+done
