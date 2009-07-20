@@ -1,21 +1,43 @@
+###################################################################################################
+#   Copyright 2009 Ismael Angelo A. Casimpan Jr.
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+###################################################################################################
+
 #!/bin/bash
 
 ### enable set lines below for debugging...
 #set -x
 #set -v
 
+SITE_NAME=$1
 BASEDIR=./REPORTS
-PAGE_PATH=$BASEDIR/$1
-SUMMARY_FILE=$BASEDIR/SUMMARY/${1}_4review
+PAGE_PATH=$BASEDIR/$SITE_NAME
+SUMMARY_FILE=$BASEDIR/SUMMARY/${SITE_NAME}_4review
 
-## Make sure the $SUMMARY_FILE is blank
+GREP_BIN=/usr/bin/grep
+
+## Ensure the $SUMMARY_FILE is blank
 echo "" > $SUMMARY_FILE
 
-## Do the actual summarization, getting the important headers...
-for n in $(ls $PAGE_PATH); do
-    echo "checking on $PAGE_PATH/$n..."                             >> $SUMMARY_FILE
-    grep -i \<TITLE                    $PAGE_PATH/$n                >> $SUMMARY_FILE
-    grep -i \<META\ NAME=\"DESCRIPTION $PAGE_PATH/$n                >> $SUMMARY_FILE
-    grep -i \<META\ NAME=\"KEYWORDS    $PAGE_PATH/$n                >> $SUMMARY_FILE
-    echo '--------------------------------------------------------' >> $SUMMARY_FILE
+## Do the actual summarization, getting the important headers(TITLE,  META DESC, META KW)...
+for site_page in $(ls $PAGE_PATH); do
+    echo "checking on $PAGE_PATH/$n..."                                >> $SUMMARY_FILE
+    ${GREP_BIN} -i \<TITLE                    $PAGE_PATH/$site_page    >> $SUMMARY_FILE
+    ${GREP_BIN} -i \<META\ NAME=\"DESCRIPTION $PAGE_PATH/$site_page    >> $SUMMARY_FILE
+    ${GREP_BIN} -i \<META\ NAME=\"KEYWORDS    $PAGE_PATH/$site_page    >> $SUMMARY_FILE
+    echo '-----------------------------------------------------------' >> $SUMMARY_FILE
 done
+
+### Inform the user where the summary files are...
+echo "Summary file for $SITE_NAME can be found in $SUMMARY_FILE"
