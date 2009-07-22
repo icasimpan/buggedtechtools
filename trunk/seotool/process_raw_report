@@ -32,7 +32,7 @@ echo "" > $SUMMARY_FILE
 
 ## Do the actual summarization, getting the important headers(TITLE,  META DESC, META KW)...
 for site_page in $(ls $PAGE_PATH); do
-    echo "checking on $PAGE_PATH/$n..."                                >> $SUMMARY_FILE
+    echo "checking on $PAGE_PATH/${site_page}..."                      >> $SUMMARY_FILE
     ${GREP_BIN} -i \<TITLE                    $PAGE_PATH/$site_page    >> $SUMMARY_FILE
     ${GREP_BIN} -i \<META\ NAME=\"DESCRIPTION $PAGE_PATH/$site_page    >> $SUMMARY_FILE
     ${GREP_BIN} -i \<META\ NAME=\"KEYWORDS    $PAGE_PATH/$site_page    >> $SUMMARY_FILE
