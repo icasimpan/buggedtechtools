@@ -74,9 +74,6 @@ for n in `${PERL_BIN} -le "print for 0 .. $LEN"`; do
   fi
   echo "[NOTE] Getting ${ALL_LABEL[$n]} page ..."
   ### NOTE: If the pages reside on an authenticated site, use the one with password 
-  ## curl --basic --user username:"my password" ${ALL_URL[$n]} > $REPORT_DIR/${auto_prep_zero_when_needed}${n}_${GADIR}-${ALL_RAW_REPORT[$n]}
+  ## ${CURL_BIN} --basic --user username:"my password" ${ALL_URL[$n]} > $REPORT_DIR/${auto_prep_zero_when_needed}${n}_${GADIR}-${ALL_RAW_REPORT[$n]}
   ${CURL_BIN} ${ALL_URL[$n]} > $REPORT_DIR/${auto_prep_zero_when_needed}${n}_${GADIR}-${ALL_RAW_REPORT[$n]}
 done
-
-echo "[NOTE] Generating report summary page..."
-./process_raw_report $GADIR
