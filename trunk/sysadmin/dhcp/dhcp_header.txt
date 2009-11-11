@@ -1,0 +1,66 @@
+# DHCP Server Configuration file.
+#   see /usr/share/doc/dhcp*/dhcpd.conf.sample
+#
+ddns-update-style interim;
+ignore client-updates;
+authoritative;
+option option-150 code 150 = ip-address;
+
+subnet 192.168.0.0 netmask 255.255.240.0 {
+
+  next-server 192.168.6.111;
+  # The range of IP addresses the server
+  # will issue to DHCP enabled PC clients
+  # booting up on the network
+  range 192.168.6.110 192.168.6.160;
+  range 192.168.7.110 192.168.7.160;
+  range 192.168.8.110 192.168.8.160;
+
+  # Set the amount of time in seconds that
+  # a client may keep the IP address
+
+  default-lease-time 86400;
+  max-lease-time 86400;
+
+  # Set the default gateway to be used by
+  # the PC clients
+  option routers 192.168.6.111;
+
+  # Don't forward DHCP requests from this
+  # NIC interface to any other NIC
+  # interfaces
+  option ip-forwarding off;
+
+  # Set the broadcast address and subnet mask
+  # to be used by the DHCP clients
+  option broadcast-address 192.168.6.255;
+  option subnet-mask 255.255.240.0;
+
+  # Set the DNS server to be used by the
+  # DHCP clients
+  option domain-name-servers 192.168.6.111, 192.168.8.1;
+  #option domain-name-servers 192.168.8.1, 192.168.6.111;
+  #----------------- BAYANTEL DNS SERVERS
+  #----------------- option domain-name-servers 202.78.97.35, 202.78.97.41;
+  #----------------- option domain-name-servers 210.4.2.8, 210.4.2.9;
+  #----------------- GLOBE DNS SERVERS
+  #----------------- option domain-name-servers 203.177.3.100, 203.177.225.10;
+  #----------------- option domain-name-servers 222.127.143.5, 202.126.35.181;
+  #----------------- OPEN DNS NAME SERVERS
+  #----------------- option domain-name-servers 208.67.222.222,208.67.220.220;
+  
+  # Set the NTP server to be used by the
+  # DHCP clients
+  
+  #option nntp-server 192.168.1.100;
+  #option ntp-servers 192.168.6.111;
+  option tftp-server-name "192.168.8.1";
+  #option tftp-server-name "216.241.160.147";
+  
+  # If you specify a WINS server for your Windows clients,
+  # you need to include the following option in the dhcpd.conf file:
+  
+  ##option netbios-name-servers 192.168.1.100;
+  
+  # You can also assign specific IP addresses based on the clients'
+  # ethernet MAC address as follows (Host's name is "laser-printer":

@@ -1,0 +1,58 @@
+###################################################################################################
+#   Copyright 2009 Ismael Angelo A. Casimpan Jr.
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+###################################################################################################
+
+###################################################################################################
+# SCRIPT NAME : dhcp_conf_builder
+# USAGE       : For easy management of dhcp-based manual allocation of ip
+# AUTHOR      : Ismael Angelo A. Casimpan Jr. <ismael.angelo@casimpan.com>
+###################################################################################################
+#!/bin/bash
+
+## Uncomment below for debugging
+#set -x
+#set -v
+
+dir_loc=./
+ipalloc_file=$dir_loc/ipalloc.txt
+genconf_file=$dir_loc/gen_dhcpd.conf
+curr_dhcp_conf=/etc/dhcpd.conf
+
+####  Start generating the dhcpd.conf
+
+cat $dir_loc/dhcp_header.txt > $genconf_file
+
+grep -v ^# $ipalloc_file | sed -e '/^$/d' | \
+awk -F\/ '{print "  host ",$1,"{            \
+\n       hardware ethernet   ",$2";         \
+\n       fixed-address       ",$3";         \
+\n       option routers      ",$4";         \
+\n  }"
+}' >> $genconf_file
+
+echo '}' >>  $genconf_file
+
+echo 'Do you want to use the generated dhcp config?(Yes/no)'
+echo -n '(default: no) >>> '
+read conf_copy
+if [ "$conf_copy" == 'Yes' ]; then
+   echo "[FYI] Copying $genconf_file to $curr_dhcp_conf ..."
+   `cp $genconf_file $curr_dhcp_conf`
+   echo '[FYI] Restarting the dhcp daemon ...'
+   /etc/init.d/dhcpd restart
+else
+   echo "[FYI] Not copying $genconf_file"
+   echo "[FYI] auto generated dhcpd.conf is in $genconf_file"
+fi
