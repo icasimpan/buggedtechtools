@@ -1,0 +1,12 @@
+## Configuration file for 'dhcp_conf_builder'
+## FORMAT: Name/MAC/IP/Router
+
+##  IMPORTANT NOTE: add this "|sed -e '/^$/d'" to command pipe to remove
+##                 blank lines from the output
+
+# VirtualMachines
+INFRA01/08:00:27:54:0C:50/192.168.7.100/192.168.6.111
+INFRA02/08:00:27:67:05:37/192.168.7.101/192.168.6.111
+INFRA_LBFW/08:00:27:67:B0:1B/192.168.7.102/192.168.6.111
+INFRA_UBUNTU/08:00:27:7a:80:be/192.168.7.103/192.168.6.111
+INFRA_XP/08:00:27:95:2B:5C/192.168.7.104/192.168.6.111
